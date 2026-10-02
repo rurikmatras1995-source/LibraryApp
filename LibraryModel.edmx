@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище БиблиотекаModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="book_loans">
+          <Key>
+            <PropertyRef Name="loan_id" />
+          </Key>
+          <Property Name="loan_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="book_id" Type="int" Nullable="false" />
+          <Property Name="reader_id" Type="int" Nullable="false" />
+          <Property Name="librarian_id" Type="int" Nullable="false" />
+          <Property Name="loan_date" Type="date" />
+          <Property Name="return_date" Type="date" />
+          <Property Name="due_date" Type="date" Nullable="false" />
+          <Property Name="is_returned" Type="bit" />
+        </EntityType>
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="book_title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="author" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="50" />
+          <Property Name="year_of_publication" Type="int" />
+          <Property Name="publisher" Type="varchar" MaxLength="100" />
+          <Property Name="page_count" Type="int" />
+          <Property Name="copies_total" Type="int" />
+          <Property Name="copies_available" Type="int" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="genres">
+          <Key>
+            <PropertyRef Name="genre_id" />
+          </Key>
+          <Property Name="genre_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="genre_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" />
+        </EntityType>
+        <EntityType Name="librarians">
+          <Key>
+            <PropertyRef Name="librarian_id" />
+          </Key>
+          <Property Name="librarian_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="position" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="hire_date" Type="date" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="readers">
+          <Key>
+            <PropertyRef Name="reader_id" />
+          </Key>
+          <Property Name="reader_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="birth_date" Type="date" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="registration_date" Type="date" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="role" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__book_loan__book___440B1D61">
+          <End Role="books" Type="Self.books" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book_loan__libra__45F365D3">
+          <End Role="librarians" Type="Self.librarians" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="librarians">
+              <PropertyRef Name="librarian_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="librarian_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book_loan__reade__44FF419A">
+          <End Role="readers" Type="Self.readers" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readers">
+              <PropertyRef Name="reader_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="reader_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище БиблиотекаModelContainer">
+          <EntitySet Name="book_loans" EntityType="Self.book_loans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="books" EntityType="Self.books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="librarians" EntityType="Self.librarians" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="readers" EntityType="Self.readers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__book_loan__book___440B1D61" Association="Self.FK__book_loan__book___440B1D61">
+            <End Role="books" EntitySet="books" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book_loan__libra__45F365D3" Association="Self.FK__book_loan__libra__45F365D3">
+            <End Role="librarians" EntitySet="librarians" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book_loan__reade__44FF419A" Association="Self.FK__book_loan__reade__44FF419A">
+            <End Role="readers" EntitySet="readers" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="БиблиотекаModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="book_loans">
+          <Key>
+            <PropertyRef Name="loan_id" />
+          </Key>
+          <Property Name="loan_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="reader_id" Type="Int32" Nullable="false" />
+          <Property Name="librarian_id" Type="Int32" Nullable="false" />
+          <Property Name="loan_date" Type="DateTime" Precision="0" />
+          <Property Name="return_date" Type="DateTime" Precision="0" />
+          <Property Name="due_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="is_returned" Type="Boolean" />
+          <NavigationProperty Name="books" Relationship="Self.FK__book_loan__book___440B1D61" FromRole="book_loans" ToRole="books" />
+          <NavigationProperty Name="librarians" Relationship="Self.FK__book_loan__libra__45F365D3" FromRole="book_loans" ToRole="librarians" />
+          <NavigationProperty Name="readers" Relationship="Self.FK__book_loan__reade__44FF419A" FromRole="book_loans" ToRole="readers" />
+        </EntityType>
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="book_title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="author" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="year_of_publication" Type="Int32" />
+          <Property Name="publisher" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="page_count" Type="Int32" />
+          <Property Name="copies_total" Type="Int32" />
+          <Property Name="copies_available" Type="Int32" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="book_loans" Relationship="Self.FK__book_loan__book___440B1D61" FromRole="books" ToRole="book_loans" />
+        </EntityType>
+        <EntityType Name="genres">
+          <Key>
+            <PropertyRef Name="genre_id" />
+          </Key>
+          <Property Name="genre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="genre_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="librarians">
+          <Key>
+            <PropertyRef Name="librarian_id" />
+          </Key>
+          <Property Name="librarian_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="hire_date" Type="DateTime" Precision="0" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="book_loans" Relationship="Self.FK__book_loan__libra__45F365D3" FromRole="librarians" ToRole="book_loans" />
+        </EntityType>
+        <EntityType Name="readers">
+          <Key>
+            <PropertyRef Name="reader_id" />
+          </Key>
+          <Property Name="reader_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birth_date" Type="DateTime" Precision="0" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="registration_date" Type="DateTime" Precision="0" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="book_loans" Relationship="Self.FK__book_loan__reade__44FF419A" FromRole="readers" ToRole="book_loans" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__book_loan__book___440B1D61">
+          <End Role="books" Type="Self.books" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book_loan__libra__45F365D3">
+          <End Role="librarians" Type="Self.librarians" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="librarians">
+              <PropertyRef Name="librarian_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="librarian_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book_loan__reade__44FF419A">
+          <End Role="readers" Type="Self.readers" Multiplicity="1" />
+          <End Role="book_loans" Type="Self.book_loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readers">
+              <PropertyRef Name="reader_id" />
+            </Principal>
+            <Dependent Role="book_loans">
+              <PropertyRef Name="reader_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="БиблиотекаEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="book_loans" EntityType="Self.book_loans" />
+          <EntitySet Name="books" EntityType="Self.books" />
+          <EntitySet Name="genres" EntityType="Self.genres" />
+          <EntitySet Name="librarians" EntityType="Self.librarians" />
+          <EntitySet Name="readers" EntityType="Self.readers" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK__book_loan__book___440B1D61" Association="Self.FK__book_loan__book___440B1D61">
+            <End Role="books" EntitySet="books" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book_loan__libra__45F365D3" Association="Self.FK__book_loan__libra__45F365D3">
+            <End Role="librarians" EntitySet="librarians" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book_loan__reade__44FF419A" Association="Self.FK__book_loan__reade__44FF419A">
+            <End Role="readers" EntitySet="readers" />
+            <End Role="book_loans" EntitySet="book_loans" />
+          </AssociationSet>
+          <EntitySet Name="users" EntityType="БиблиотекаModel.users" />
+        </EntityContainer>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password_hash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище БиблиотекаModelContainer" CdmEntityContainer="БиблиотекаEntities">
+          <EntitySetMapping Name="book_loans">
+            <EntityTypeMapping TypeName="БиблиотекаModel.book_loans">
+              <MappingFragment StoreEntitySet="book_loans">
+                <ScalarProperty Name="loan_id" ColumnName="loan_id" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="reader_id" ColumnName="reader_id" />
+                <ScalarProperty Name="librarian_id" ColumnName="librarian_id" />
+                <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+                <ScalarProperty Name="return_date" ColumnName="return_date" />
+                <ScalarProperty Name="due_date" ColumnName="due_date" />
+                <ScalarProperty Name="is_returned" ColumnName="is_returned" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="БиблиотекаModel.books">
+              <MappingFragment StoreEntitySet="books">
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="book_title" ColumnName="book_title" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="year_of_publication" ColumnName="year_of_publication" />
+                <ScalarProperty Name="publisher" ColumnName="publisher" />
+                <ScalarProperty Name="page_count" ColumnName="page_count" />
+                <ScalarProperty Name="copies_total" ColumnName="copies_total" />
+                <ScalarProperty Name="copies_available" ColumnName="copies_available" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genres">
+            <EntityTypeMapping TypeName="БиблиотекаModel.genres">
+              <MappingFragment StoreEntitySet="genres">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="librarians">
+            <EntityTypeMapping TypeName="БиблиотекаModel.librarians">
+              <MappingFragment StoreEntitySet="librarians">
+                <ScalarProperty Name="librarian_id" ColumnName="librarian_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="hire_date" ColumnName="hire_date" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="readers">
+            <EntityTypeMapping TypeName="БиблиотекаModel.readers">
+              <MappingFragment StoreEntitySet="readers">
+                <ScalarProperty Name="reader_id" ColumnName="reader_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="БиблиотекаModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="БиблиотекаModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

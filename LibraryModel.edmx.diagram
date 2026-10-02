@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1f33238e53a7490e9e47692c66e92a0c" Name="Diagram1">
+        <EntityTypeShape EntityType="БиблиотекаModel.book_loans" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="БиблиотекаModel.books" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="БиблиотекаModel.genres" Width="1.5" PointX="4.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="БиблиотекаModel.librarians" Width="1.5" PointX="1.375" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="БиблиотекаModel.readers" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="БиблиотекаModel.sysdiagrams" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="БиблиотекаModel.FK__book_loan__book___440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="БиблиотекаModel.FK__book_loan__libra__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="БиблиотекаModel.FK__book_loan__reade__44FF419A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="БиблиотекаModel.users" Width="1.5" PointX="7.5" PointY="1.875" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
